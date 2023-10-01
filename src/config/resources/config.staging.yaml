@@ -1,0 +1,21 @@
+http:
+  port: 3001
+jwtConstants:
+  secretToken: q3t6w9z$C&F)J@NcQfTjWnZr4u7x!A%D*G-KaSgUkXp2s5v8y/B?E(H+MbQeTh
+  refreshToken: refreshTOken_kjfbakhfba8ihjknfoahfohwnbetiyhweoarhbnflanl====abigsabf*bfdkjja7anjdf2
+dataSource:
+  redis:
+    host: 192.168.50.166
+    port: 6379
+    password: "ticket@123"
+  primary:
+    host: 192.168.50.166
+    username: "postgres"
+    password: "infodevticket@123"
+    port: 5432
+    database: "db_ticketing"
+  rabbitMQ:
+    user: fastloan
+    password: InS3cJsPas
+    host: 172.31.1.9
+    port: 5672

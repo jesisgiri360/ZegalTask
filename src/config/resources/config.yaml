@@ -1,0 +1,22 @@
+http:
+  port: 3001
+jwtConstants:
+  secretToken: q3t6w9z$C&F)J@NcQfTjWnZr4u7x!A%D*G-KaSgUkXp2s5v8y/B?E(H+MbQeTh
+  refreshToken: refreshTOken_kjfbakhfba8ihjknfoahfohwnbetiyhweoarhbnflanl====abigsabf*bfdkjja7anjdf2
+dataSource:
+  redis:
+    host: 172.23.1.135
+    port: 6379
+    password: "ticket@123"
+  primary:
+    host: 172.23.1.135
+    username: "postgres"
+    password: "infodevticket@123"
+    port: 5432
+    database: "ticket"
+  hris:
+    IDENTITY_SERVER: https://hris.infodev.com.np
+    AUTHORIZATION_ENDPOINT: https://idnhris.infodev.com.np/connect/authorize
+    ISSUER: https://idnhris.infodev.com.np
+    jwksuri: https://idnhris.infodev.com.np/.well-known/openid-configuration/jwks
+    hr_url: https://hris.infodev.com.np

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        #chat-box {
+            width: 300px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat Application</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="message" placeholder="Type a message">
+    <button id="send">Send</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script>
+        const socket = io('http://localhost:3001',{query:{token:'eyJhbGciOiJSUzI1NiIsImtpZCI6IjRERTNCOENCOTc3RUFGQzQyNjBFM0IxM0IzOUJGQ0ZEOEMxREJCMTEiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJUZU80eTVkLXI4UW1EanNUczV2OF9Zd2R1eEUifQ.eyJuYmYiOjE2OTQzMjU0MzQsImV4cCI6MTY5NDM2MTQzNCwiaXNzIjoiaHR0cHM6Ly9pZG5ocmlzLmluZm9kZXYuY29tLm5wIiwiYXVkIjpbImh0dHBzOi8vaWRuaHJpcy5pbmZvZGV2LmNvbS5ucC9yZXNvdXJjZXMiLCJpbmZvLmhyIl0sImNsaWVudF9pZCI6ImluZm8ubXZjIiwic3ViIjoiMTE4NzciLCJhdXRoX3RpbWUiOjE2OTQzMjU0MzQsImlkcCI6ImxvY2FsIiwiZW1wX2NvZGUiOiI2MTgiLCJicmFuY2hfaWQiOiIxIiwiYnJhbmNoX25hbWUiOiJIZWFkIE9mZmljZSIsImJyYW5jaF90eXBlIjoiMSIsImJyYW5jaF9jb2RlIjoiMDAxIiwidGhlbWVfb3B0aW9uIjoiMSIsInVzZXJfdHlwZSI6IjEiLCJsYW5nX29wdGlvbiI6IjEiLCJyb2xlIjoiRW1wbG95ZWUgIiwicm9sZWlkIjoiMTAyMyIsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlbWFpbCIsImJyYW5jaF9pbmZvIiwib3RoZXJfdXNlcl9pbmZvIiwiaW5mby5ociJdLCJhbXIiOlsicHdkIl19.HU7J0dtLGQZD17fjzGnZDOwcHJavyPM4l495gcRoPa_jb7rJH865olvzrTPsBkRzWPuA6Syk-knG44ZlykJmhHyp1UDmjkXxeiFMEhJf1oRYLy3_q1hLnDFNY9mhfJmPx3xS_kaz6sE5F499c8BGaikw4Zkf6RgyiEulloz_SvC27-hbWmSoX1g8uaW2B3_sA_jv2pu4ZkZXoaVGmpY-dp5nCGhu7S3f-55UU6k1Vf5aEHTriz-GgJiI2XaAjK3H5NH3jIxp6p9wtmKtjg7J3cBWSyCdSPwRJaG7M-lnin2ikeiMUQIb5n_XTtRUJl_xwMxjklMbBTCL9_ZplFXZKw'}}); // Replace with your server's URL
+
+        const chatBox = document.getElementById('chat-box');
+        const messageInput = document.getElementById('message');
+        const sendButton = document.getElementById('send');
+
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value;
+            if (message.trim() !== '') {
+                socket.emit('chatMessage', message);
+                messageInput.value = '';
+            }
+        });
+
+        socket.on('618', (message) => {
+          console.log("Connected to server")
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom of the chat box
+        });
+    </script>
+</body>
+</html>

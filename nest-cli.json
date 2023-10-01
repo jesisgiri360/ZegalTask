@@ -1,0 +1,25 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "plugins": ["@nestjs/swagger"],
+
+    "assets": [
+      {
+        "watchAssets": true,
+        "include": "config/resources/*.yaml",
+        "outDir": "dist/src"
+      },
+      {
+        "watchAssets": true,
+        "include": "config/resources/assets/*",
+        "outDir": "dist/src"
+      },
+      {
+        "watchAssets": true,
+        "include": "**/*.proto",
+        "outDir": "dist/src"
+      }
+    ]
+  }
+}
