@@ -15,7 +15,7 @@ dataSource:
     port: 5432
     database: "db_ticketing"
   rabbitMQ:
-    user: fastloan
-    password: InS3cJsPas
-    host: 172.31.1.9
+    user: fast-local
+    password: fast-local
+    host: localhost
     port: 5672

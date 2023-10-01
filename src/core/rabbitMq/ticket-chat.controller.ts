@@ -14,7 +14,7 @@ import {
   PrivateChatQuery,
   TicketMessageDto,
 } from "./dto/message.dto";
-import { TicketMessagingService } from "./ticket-chat.service";
+import { TicketMessagingService } from "./rabbit.mq.service";
 
 @ApiBearerAuth()
 @Controller("/ticket-chat")
