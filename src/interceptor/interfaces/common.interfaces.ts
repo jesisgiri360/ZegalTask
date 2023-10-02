@@ -13,22 +13,6 @@ import {
 } from "class-validator";
 // import { ToBoolean } from "@decorator/transform.decorator";
 
-export enum RequestStatus {
-  PENDING = "pending",
-  APPROVED = "approved",
-  REJECTED = "rejected",
-}
-
-export enum BatchStatus {
-  COMPLETED = "completed",
-  INCOMPLETE = "incomplete",
-}
-
-export enum ApprovalTemplateName {
-  ACCOUNT_TEMPLATE = "account-template",
-  USER_TEMPLATE = "user-template",
-}
-
 export class FetchTokenData {
   @IsNotEmpty()
   @IsString()

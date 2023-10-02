@@ -1,18 +1,27 @@
-# Common build stage
+# Use an official Node.js runtime as a parent image
 FROM node:16.5.0
-#ENV http_proxy=http:...
-#ENV https_proxy=http:...
-COPY . ./app
 
+# Set the working directory in the container
 WORKDIR /app
 
-RUN npm install
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+
+# Install Nest.js dependencies
+RUN npm install --force
 RUN npm run build
 
+# Expose the port that the Nest.js application will run on (if needed)
+# EXPOSE 3000
 
-#EXPOSE 3000
+# Set environment variables (RabbitMQ connection info)
+ENV NODE_ENV development
+ENV TZ=Asia/Kathmandu
+ENV RABBITMQ_HOST=rabbitmq
+ENV RABBITMQ_PORT=5672
+ENV RABBITMQ_USER=guest
+ENV RABBITMQ_PASSWORD=guest
+ENV RABBITMQ_QUEUE_NAME=zegal-task
 
-ENV NODE_ENV staging
-ENV TZ=Asia/Kathmandu 
-RUN rm -f /app/src/config/resources/config.yaml
+# Define the command to run your Nest.js application
 CMD ["npm", "run", "start"]

@@ -12,35 +12,17 @@ import TransformInterceptor from "./interceptor/TransformInterceptor";
 import { AsyncContextModule } from "./utils/context";
 import configuration from "./config/configuration";
 import { GlobalModule } from "./config/global.config";
-import { ScheduleModule } from "@nestjs/schedule";
-import * as redisStore from "cache-manager-redis-store";
-import { ChatGatewayModule } from "./core/Chat-Gateway/chat-gateway.module";
 import { ContextInterceptor } from "@interceptor/pre/context.interceptor";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      load: [configuration],
-      isGlobal: true,
-    }),
     ConfigurationModule,
-    TypeOrmModule.forRoot({
-      ...Connection(),
-    }),
-
+    // TypeOrmModule.forRoot({
+    //   ...Connection(),
+    // }),
     GlobalModule,
-    CacheModule.registerAsync({
-      isGlobal: true,
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        store: redisStore,
-        ...redisConnection(),
-      }),
-    }),
     ...importClassesFromDirectories(),
     AsyncContextModule.forRoot({ isGlobal: true }),
-    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [

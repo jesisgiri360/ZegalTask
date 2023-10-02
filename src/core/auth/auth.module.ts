@@ -3,7 +3,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthService } from "./auth.service";
-import { JwtStrategy } from "../strategy/jwt.strategy";
+// import { JwtStrategy } from "../strategy/jwt.strategy";
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { JwtStrategy } from "../strategy/jwt.strategy";
       global: true,
     },
   ],
-  providers: [JwtStrategy, AuthService],
+  providers: [AuthService],
   controllers: [],
   exports: [AuthService],
 })

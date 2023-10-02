@@ -23,7 +23,7 @@ import { MessageEnum } from "../config/CONSTANTS";
 import logger from "src/logger";
 @Catch()
 export class HttpExceptionHandler implements ExceptionFilter {
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
+  constructor() {}
 
   async catch(exception: any, host: ArgumentsHost): Promise<any> {
     const response: Response = host.switchToHttp().getResponse();
@@ -87,24 +87,6 @@ export class HttpExceptionHandler implements ExceptionFilter {
         errorObj.description =
           "Please Login Again or get a new token from refresh token.";
       }
-      const message = await this.cacheManager.get(
-        exception?.message?.toUpperCase()
-      );
-
-      const source =
-        message && typeof exception.getSource === "function"
-          ? exception.getSource()
-          : null;
-
-      errorObj.message =
-        message && source
-          ? util.format(message, ...(Array.isArray(source) ? source : [source]))
-          : message || exception.message;
-
-      errorObj.description =
-        exception.description || errorObj.description || null;
-
-      errorObj.status = exception.status || errorObj.status;
 
       if (exception.status === 404) {
         errorObj.message = "Route Not Found";

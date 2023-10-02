@@ -6,7 +6,6 @@ import {
 } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { AsyncContext } from "../../utils/context";
-import unprotectedRoute from "../../utils/unprotected.route";
 
 @Injectable()
 export class ContextInterceptor implements NestInterceptor {

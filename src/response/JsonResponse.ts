@@ -14,7 +14,6 @@ export class SuccessResponse {
   }
 
   responseOk() {
-    console.log(this.cacheManager);
     // this.message = '';
     // return this.SUCCESS;
   }

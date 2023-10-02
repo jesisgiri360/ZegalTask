@@ -4,16 +4,7 @@ import { join } from "path";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const environment = process.env.NODE_ENV || "development";
-
-console.log("NODE_ENV", process.env.NODE_ENV);
-console.log("CONFIG_FILE_PATH", process.env.CONFIG_FILE_PATH);
-console.log("environment", environment);
-
-const YAML_CONFIG_FILENAME =
-  process.env.CONFIG_FILE_PATH || environment === "production"
-    ? "config.yaml"
-    : `config.${environment}.yaml`;
+const YAML_CONFIG_FILENAME = "config.yaml";
 
 const YAML_CONFIG_TEST = "config-test.yaml";
 

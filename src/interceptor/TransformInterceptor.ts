@@ -21,20 +21,15 @@ export interface Response<T> {
 export default class TransformInterceptor<T>
   implements NestInterceptor<T, Response<T>>
 {
-  constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-    private reflector: Reflector,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   intercept(
     context: ExecutionContext,
-    next: CallHandler,
+    next: CallHandler
   ): Observable<Response<T>> {
     const message = this.reflector.get<string>("message", context.getHandler());
     const source = this.reflector.get<string>("source", context.getHandler());
-    const responseMessageTemplate =
-      // message && (await this.cacheManager.get(message));
-      message && MESSAGES.SUCCESS[message];
+    const responseMessageTemplate = message && MESSAGES.SUCCESS[message];
     return next.handle().pipe(
       map((data) => {
         let responseMessage = responseMessageTemplate
@@ -49,7 +44,7 @@ export default class TransformInterceptor<T>
           data,
           servedBy: ".............",
         };
-      }),
+      })
     );
   }
 }

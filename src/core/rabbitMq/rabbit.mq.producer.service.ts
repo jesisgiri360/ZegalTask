@@ -1,53 +1,73 @@
-// import amqp, { Options, Replies } from "amqplib";
-
-import { Controller, Injectable } from "@nestjs/common";
+import { Injectable, OnModuleDestroy } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import amqp from "amqp-connection-manager";
 import { IAmqpConnectionManager } from "amqp-connection-manager/dist/esm/AmqpConnectionManager";
-@Injectable()
-export class RabbitMqService {
-  constructor(private configService: ConfigService) {}
 
-  async publishToQueue(queueName: string, data: any) {
-    const config = this.configService.get("rabbitMQ");
+@Injectable()
+export class RabbitMqService implements OnModuleDestroy {
+  private connection: IAmqpConnectionManager;
+  private channelWrapper;
+  private messageCounter: number = 0;
+  private startTime: number;
+
+  constructor(private configService: ConfigService) {
+    this.initializeRabbitMQ();
+  }
+
+  private initializeRabbitMQ() {
+    const config = this.configService.get("dataSource.rabbitMQ");
     const CONN_URL = `amqp://${config.user}:${config.password}@${config.host}`;
-    const connection: IAmqpConnectionManager = amqp.connect(CONN_URL, {
+
+    this.connection = amqp.connect([CONN_URL], {
       heartbeatIntervalInSeconds: 30,
     });
-    connection.on("connect", function () {
-      console.log("Connected!");
+
+    this.connection.on("connect", () => {
+      console.log("Connected to RabbitMQ!");
+      this.createChannel();
+      this.startTime = Date.now();
+      this.publishMessages(20); // Start publishing messages at a rate of 20 per second
     });
-    connection.on("disconnect", function (err) {
-      console.log("Disconnected.", err);
+
+    this.connection.on("disconnect", (err) => {
+      console.error("Disconnected from RabbitMQ.", err);
     });
-    let channelWrapper = connection.createChannel({
+  }
+
+  private createChannel() {
+    this.channelWrapper = this.connection.createChannel({
       json: true,
       setup: async (channel) => {
-        await channel.assertQueue(queueName, { durable: true });
+        await channel.assertQueue("zegal-task", { durable: true });
       },
     });
+  }
 
-    // Generate a random message
-    const randomMessage = this.generateRandomMessage();
-
+  async publishToQueue(data: any) {
     const message = {
-      message: randomMessage,
+      message: await this.generateRandomMessage(),
       timestamp: new Date().toISOString(),
       priority: Math.floor(Math.random() * 10) + 1,
       ...data,
     };
 
-    await channelWrapper.sendToQueue(queueName, message);
+    await this.channelWrapper.sendToQueue("zegal-task", message);
+    this.messageCounter++;
 
-    await channelWrapper.close();
+    if (this.messageCounter === 20) {
+      const elapsedTime = Date.now() - this.startTime;
+      console.log(elapsedTime, "-------------------->>>>>>>>>>>>>");
+    }
   }
 
   async generateRandomMessage() {
-    // Replace this with your random phrase generation logic
     const phrases = [
       "Hello, World!",
       "This is a test message.",
       "Random message content.",
+      "NestJS RabbitMQ publisher is awesome!",
+      "Don't forget to subscribe to our channel.",
+      // Add more phrases here
     ];
     const randomIndex = Math.floor(Math.random() * phrases.length);
     return phrases[randomIndex];
@@ -57,12 +77,17 @@ export class RabbitMqService {
     const intervalMs = 1000 / rate;
 
     while (true) {
-      await this.publishToQueue("zegal-task", {});
+      await this.publishToQueue({});
       await this.sleep(intervalMs);
     }
   }
 
   private async sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async onModuleDestroy() {
+    await this.channelWrapper.close();
+    await this.connection.close();
   }
 }
