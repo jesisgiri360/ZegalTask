@@ -3,7 +3,6 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "plugins": ["@nestjs/swagger"],
-
     "assets": [
       {
         "watchAssets": true,
@@ -13,11 +12,6 @@
       {
         "watchAssets": true,
         "include": "config/resources/assets/*",
-        "outDir": "dist/src"
-      },
-      {
-        "watchAssets": true,
-        "include": "**/*.proto",
         "outDir": "dist/src"
       }
     ]

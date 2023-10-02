@@ -664,9 +664,9 @@
     "semver" "^7.3.5"
     "tar" "^6.1.11"
 
-"@msgpackr-extract/msgpackr-extract-linux-x64@2.0.2":
-  "integrity" "sha512-zrBHaePwcv4cQXxzYgNj0+A8I1uVN97E7/3LmkRocYZ+rMwUsnPpp4RuTAHSRoKlTQV3nSdCQW4Qdt4MXw/iHw=="
-  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-x64/-/msgpackr-extract-linux-x64-2.0.2.tgz"
+"@msgpackr-extract/msgpackr-extract-win32-x64@2.0.2":
+  "integrity" "sha512-fpnI00dt+yO1cKx9qBXelKhPBdEgvc8ZPav1+0r09j0woYQU2N79w/jcGawSY5UGlgQ3vjaJsFHnGbGvvqdLzg=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-2.0.2.tgz"
   "version" "2.0.2"
 
 "@nestjs-modules/mailer@^1.6.1":
