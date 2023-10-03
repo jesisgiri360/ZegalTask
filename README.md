@@ -53,7 +53,7 @@ Architecture :
           |      Server       |
           |                   |
           |  +-------------+  |
-          |  |   Consumer  |  |
+          |  |   Consumer  |  |Consumer ignores messages which are below number 7.
           |  |   (Node.js) |  |
           |  +-------------+  |
           |         ^         |
@@ -63,7 +63,8 @@ Architecture :
           |         ^         |
           |  +-------------+  |
           |  |  Publisher  |  |
-          |  |   (Node.js) |  |
+          |  |   (Node.js)  publishes 20 random messages per second
+          |  |
           |  +-------------+  |
           +-------------------+
 
