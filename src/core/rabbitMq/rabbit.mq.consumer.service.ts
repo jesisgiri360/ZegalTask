@@ -61,7 +61,7 @@ export class RabbitMqConsumerService implements OnModuleInit, OnModuleDestroy {
         timestamp: content.timestamp,
         priority: content.priority,
       };
-      await this.socketGatewayService.sendNotification(data);
+       this.socketGatewayService.sendNotification(data);
     } else {
       console.log("Received message with priority < 7. Ignoring:", content);
     }
