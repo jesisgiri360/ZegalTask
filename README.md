@@ -31,9 +31,11 @@
 
 ```bash
 $ npm install
-```
+
 
 ## Running the app
+Need rabbit mq installed locally.
+
 
 ```bash
 # development
