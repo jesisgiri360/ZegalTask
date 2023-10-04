@@ -37,27 +37,36 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+Architecture :
+          +-------------------+
+          |   Client Server   |
+          +-------------------+
+                 ^
+                 |
+            WebSocket
+                 |
+          +-------------------+
+          |      Node.js      |
+          |      Server       |
+          |                   |
+          |  +-------------+  |
+          |  |   Consumer  |  |Consumer ignores messages which are below number 7.
+          |  |   (Node.js) |  |
+          |  +-------------+  |
+          |         ^         |
+          |         |         |
+          |    RabbitMQ      |
+          |         |         |
+          |         ^         |
+          |  +-------------+  |
+          |  |  Publisher  |  |
+          |  |   (Node.js)  publishes 20 random messages per second
+          |  |
+          |  +-------------+  |
+          +-------------------+
 
 ## Support
 
